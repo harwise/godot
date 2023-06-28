@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0dsjoje4h4un"]
+
+[ext_resource type="Texture2D" uid="uid://dux2fsgfvoyws" path="res://sprites/light.png" id="1"]
+[ext_resource type="Script" path="res://logic/Brick.gd" id="2"]
+
+[sub_resource type="OccluderPolygon2D" id="1"]
+polygon = PackedVector2Array(-46.8594, -46.8828, 46.2891, 46.2969, -46.8438, 46.3047)
+
+[node name="SlantedBrick" type="RigidBody2D"]
+position = Vector2(120, 376)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("2")
+
+[node name="BrickShape" type="Polygon2D" parent="."]
+scale = Vector2(0.085, 0.085)
+color = Color(0.576471, 0.180392, 0.180392, 1)
+antialiased = true
+invert_border = 85.9
+polygon = PackedVector2Array(-551.09, 544.843, 544.429, 544.853, -551.195, -551.378)
+
+[node name="Collision2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-46.828, -46.859, 46.2656, 46.3125, -46.828, 46.312)
+
+[node name="HealthLabel" type="Label" parent="."]
+light_mask = -2147483646
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Light2D" type="PointLight2D" parent="."]
+position = Vector2(0.0234375, 0)
+enabled = false
+energy = 0.5
+shadow_enabled = true
+shadow_item_cull_mask = 2
+texture = ExtResource("1")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+position = Vector2(0.0078125, 0)
+occluder = SubResource("1")

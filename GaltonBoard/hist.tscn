@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cfrpvor0fqqgx"]
+
+[ext_resource type="Script" path="res://hist.gd" id="1_g0el3"]
+
+[node name="hist" type="Control"]
+layout_mode = 3
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_right = -1152.0
+offset_bottom = -324.0
+script = ExtResource("1_g0el3")

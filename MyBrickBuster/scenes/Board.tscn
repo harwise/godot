@@ -1,0 +1,233 @@
+[gd_scene load_steps=10 format=3 uid="uid://br1v1xc6sjfdv"]
+
+[ext_resource type="Script" path="res://logic/BBGame.gd" id="1"]
+[ext_resource type="FontFile" path="res://styling/fonts/NotoSans_Bold_Title.tres" id="3_bbb13"]
+[ext_resource type="Script" path="res://logic/DrawNode.gd" id="6"]
+
+[sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(719.178, 17.2468)
+
+[sub_resource type="RectangleShape2D" id="2"]
+size = Vector2(16, 1280)
+
+[sub_resource type="LabelSettings" id="LabelSettings_t0fpf"]
+font = ExtResource("3_bbb13")
+font_size = 32
+font_color = Color(0.215686, 1, 0, 1)
+shadow_size = 2
+
+[sub_resource type="Animation" id="3"]
+resource_name = "fadein"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="4"]
+resource_name = "fadeout"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_h10jg"]
+_data = {
+"fadein": SubResource("3"),
+"fadeout": SubResource("4")
+}
+
+[node name="MainGame" type="Node2D"]
+modulate = Color(0, 0, 0, 1)
+script = ExtResource("1")
+
+[node name="Board" type="Node2D" parent="." groups=["Persist"]]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Board"]
+layer = 3
+
+[node name="GameOverLabel" type="Label" parent="Board/CanvasLayer"]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 34.0
+offset_top = -193.5
+offset_right = 34.0
+offset_bottom = -170.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Game Over"
+visible_characters = 0
+visible_ratio = 0.0
+metadata/_edit_use_anchors_ = true
+
+[node name="LaunchLine" type="Line2D" parent="Board/CanvasLayer"]
+light_mask = 0
+z_index = 1
+width = 5.0
+default_color = Color(1, 0.843137, 0.392157, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="DrawNode" type="Node2D" parent="Board/CanvasLayer"]
+script = ExtResource("6")
+
+[node name="TopWall" type="StaticBody2D" parent="Board" groups=["PlayBoardElements"]]
+light_mask = 0
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Board/TopWall"]
+light_mask = 0
+position = Vector2(360, 184)
+scale = Vector2(1.00114, -0.927707)
+shape = SubResource("1")
+
+[node name="RightWall" type="StaticBody2D" parent="Board" groups=["PlayBoardElements"]]
+light_mask = 0
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Board/RightWall"]
+light_mask = 0
+position = Vector2(728, 640)
+shape = SubResource("2")
+
+[node name="EliminatorBottomWall" type="StaticBody2D" parent="Board" groups=["PlayBoardElements"]]
+light_mask = 0
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Board/EliminatorBottomWall"]
+light_mask = 0
+position = Vector2(360, 1096)
+scale = Vector2(1.00114, -0.927707)
+shape = SubResource("1")
+
+[node name="LeftWall" type="StaticBody2D" parent="Board" groups=["PlayBoardElements"]]
+light_mask = 0
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Board/LeftWall"]
+light_mask = 0
+position = Vector2(-8, 639.719)
+shape = SubResource("2")
+
+[node name="ControlArea" type="Control" parent="Board"]
+light_mask = 0
+layout_mode = 3
+anchors_preset = 0
+offset_right = 600.0
+offset_bottom = 600.0
+scale = Vector2(1.23433, 2.22299)
+metadata/_edit_use_anchors_ = true
+
+[node name="LaunchRayCast2D" type="RayCast2D" parent="Board"]
+collision_mask = 2
+
+[node name="LaunchCadenceTimer" type="Timer" parent="Board"]
+wait_time = 0.1
+
+[node name="GameOverTimer" type="Timer" parent="Board"]
+wait_time = 2.0
+
+[node name="Column0" type="Line2D" parent="Board" groups=["PlayBoardElements"]]
+visible = false
+light_mask = 0
+points = PackedVector2Array(72, 264, 72, 360, 72, 456, 72, 552, 72, 648, 72, 744, 72, 840, 72, 936, 72, 1032)
+
+[node name="Column1" type="Line2D" parent="Board" groups=["PlayBoardElements"]]
+visible = false
+light_mask = 0
+points = PackedVector2Array(168, 264, 168, 360, 168, 456, 168, 552, 168, 648, 168, 744, 168, 840, 168, 936, 168, 1032)
+
+[node name="Column2" type="Line2D" parent="Board" groups=["PlayBoardElements"]]
+visible = false
+light_mask = 0
+points = PackedVector2Array(264, 264, 264, 360, 264, 456, 264, 552, 264, 648, 264, 744, 264, 840, 264, 936, 264, 1032)
+
+[node name="Column3" type="Line2D" parent="Board" groups=["PlayBoardElements"]]
+visible = false
+light_mask = 0
+points = PackedVector2Array(360, 264, 360, 360, 360, 456, 360, 552, 360, 648, 360, 744, 360, 840, 360, 936, 360, 1032)
+
+[node name="Column4" type="Line2D" parent="Board" groups=["PlayBoardElements"]]
+visible = false
+light_mask = 0
+points = PackedVector2Array(456, 264, 456, 360, 456, 456, 456, 552, 456, 648, 456, 744, 456, 840, 456, 936, 456, 1032)
+
+[node name="Column5" type="Line2D" parent="Board" groups=["PlayBoardElements"]]
+visible = false
+light_mask = 0
+points = PackedVector2Array(552, 264, 552, 360, 552, 456, 552, 552, 552, 648, 552, 744, 552, 840, 552, 936, 552, 1032)
+
+[node name="Column6" type="Line2D" parent="Board" groups=["PlayBoardElements"]]
+visible = false
+light_mask = 0
+points = PackedVector2Array(648, 264, 648, 360, 648, 456, 648, 552, 648, 648, 648, 744, 648, 840, 648, 936, 648, 1032)
+
+[node name="Background" type="Polygon2D" parent="Board" groups=["PlayBoardElements"]]
+z_index = -1
+color = Color(0.0980392, 0.0980392, 0.0980392, 1)
+polygon = PackedVector2Array(0, 187, 720, 187, 720, 1088, 0, 1088)
+
+[node name="UI_header" type="Panel" parent="Board"]
+offset_right = 726.0
+offset_bottom = 160.0
+
+[node name="score_max" type="Label" parent="Board/UI_header"]
+layout_mode = 0
+offset_left = 542.0
+offset_top = 34.0
+offset_right = 694.0
+offset_bottom = 147.0
+label_settings = SubResource("LabelSettings_t0fpf")
+horizontal_alignment = 1
+
+[node name="score" type="Label" parent="Board/UI_header"]
+layout_mode = 0
+offset_left = 114.0
+offset_top = 34.0
+offset_right = 354.0
+offset_bottom = 147.0
+label_settings = SubResource("LabelSettings_t0fpf")
+horizontal_alignment = 1
+
+[node name="score" type="Label" parent="Board/UI_header/score"]
+layout_mode = 0
+offset_left = 352.0
+offset_right = 448.0
+offset_bottom = 113.0
+text = "Best:"
+label_settings = SubResource("LabelSettings_t0fpf")
+horizontal_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "fadein"
+libraries = {
+"": SubResource("AnimationLibrary_h10jg")
+}
+
+[connection signal="mouse_entered" from="Board/ControlArea" to="." method="_on_ControlArea_mouse_entered"]
+[connection signal="mouse_exited" from="Board/ControlArea" to="." method="_on_ControlArea_mouse_exited"]
